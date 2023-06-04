@@ -5,7 +5,7 @@ date: "2023-05-08"
 output: html_document
 ---
 
-1. Download daily discharge data for North PLatte River river in Northgate, CO from 1990-2023
+1. Download daily discharge data for North Brush Creek in Saratoga, WY. from 1990-2023
 
 # Install and load the 'dataRetrieval' package
 ```{r setup, include= F}
@@ -35,7 +35,7 @@ Plot all of the data
 p <- ggplot(discharge_data, aes(x = date, y = q_cfs)) +
   geom_point() +
   ggtitle(label ="North Platte Daily discharge", 
-          subtitle = "Northgate, CO. 1990 - 2023") +
+          subtitle = "Saratoga, WY. 1990 - 2023") +
   ylab('Q (cfs)') + 
   xlab('date')
 
@@ -54,7 +54,7 @@ lastThree <- discharge_data %>%
 p <- ggplot(lastThree, aes(x = date, y = q_cfs)) +
   geom_point() +
   ggtitle(label ="North Platte Daily discharge", 
-          subtitle = "Northgate, CO. 2018 - 2022") +
+          subtitle = "Saratoga, WY. 2018 - 2022") +
   scale_x_date(date_breaks = "2 month", date_labels = "%b")+
   ylab('Q (cfs)') + 
   xlab('date')+
@@ -74,7 +74,7 @@ lastYear <- discharge_data %>%
 p <- ggplot(lastYear, aes(x = date, y = q_cfs)) +
   geom_point() +
   ggtitle(label ="North Platte Daily discharge", 
-          subtitle = "Northgate, CO. 2022") +
+          subtitle = "Saratoga, WY. 2022") +
   scale_x_date(date_breaks = "1 month", date_labels = "%b")+
   ylab('Q (cfs)') + 
   xlab('date')
@@ -95,7 +95,7 @@ monthly_mean <- discharge_data %>%
 p <- ggplot(monthly_mean, aes(x = factor(Month), y = q_cfs)) +
   geom_boxplot() +
   ggtitle(label ="North Platte Monthly average discharge", 
-          subtitle = "Northgate, CO. 2022 ") +
+          subtitle = "Saratoga, WY. 2022 ") +
   ylab('mean Q (cfs)') + 
   xlab('Month')
 
@@ -116,10 +116,29 @@ summertime_mean <- discharge_data %>%
 p <- ggplot(summertime_mean, aes(x = year, y = summerTimeMean_q)) +
   geom_point() +
   ggtitle(label ="North Platte Summer time average discharge", 
-          subtitle = "Northgate, CO. June 21 - Sept 21") +
+          subtitle = "Saratoga, WY. June 21 - Sept 21") +
   ylab('Summer Time mean Q (cfs)') + 
   xlab('Year')
 
 p
 
+```
+
+Plot this year's data
+```{r}
+thisYear <- discharge_data %>%
+  mutate(Month = month(date)) %>%
+  mutate(Day = day(date)) %>%
+  mutate(Year = year(date)) %>% 
+  filter(Year == 2023)
+
+p <- ggplot(thisYear, aes(x = date, y = q_cfs)) +
+  geom_point() +
+  ggtitle(label ="North Platte Daily discharge", 
+          subtitle = "Saratoga, WY. 2023") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b")+
+  ylab('Q (cfs)') + 
+  xlab('date')
+
+p
 ```

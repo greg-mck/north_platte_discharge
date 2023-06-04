@@ -122,3 +122,22 @@ p <- ggplot(summertime_mean, aes(x = year, y = summerTimeMean_q)) +
 p
 
 ```
+
+Plot this year's data
+```{r}
+thisYear <- discharge_data %>%
+  mutate(Month = month(date)) %>%
+  mutate(Day = day(date)) %>%
+  mutate(Year = year(date)) %>% 
+  filter(Year == 2023)
+
+p <- ggplot(thisYear, aes(x = date, y = q_cfs)) +
+  geom_point() +
+  ggtitle(label ="North Platte Daily discharge", 
+          subtitle = "Northgate, CO. 2023") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b")+
+  ylab('Q (cfs)') + 
+  xlab('date')
+
+p
+```
